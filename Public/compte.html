@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mon espace — YERO-Ban-checker</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">
+      <img src="/logo.svg" alt="" class="crest" />
+      <h1>Mon <span>Espace</span></h1>
+      <p>Un lieu scellé, ouvert par votre phrase seule</p>
+    </div>
+
+    <div class="panel">
+      <form id="auth-form">
+        <div class="field">
+          <label for="username">Nom</label>
+          <input id="username" type="text" required autocomplete="username" />
+        </div>
+        <div class="field" id="email-field" style="display:none;">
+          <label for="email">Gmail / email</label>
+          <input id="email" type="email" autocomplete="email" placeholder="toi@gmail.com" />
+        </div>
+        <div class="field">
+          <label for="password">Phrase de passe</label>
+          <input id="password" type="password" required autocomplete="current-password" placeholder="trois mots ou plus" />
+          <p class="hint">Au moins 3 mots séparés par des espaces.</p>
+        </div>
+        <button type="submit" id="submit-btn">Entrer</button>
+      </form>
+      <div id="result"></div>
+      <div class="footer-link">
+        <a href="#" id="toggle-mode">Pas encore de compte ? Créer un espace</a>
+      </div>
+      <p class="hint" style="margin-top:14px;">
+        Compte perdu ? Contacte yero9799@gmail.com ou Telegram @yerogn.
+      </p>
+    </div>
+
+    <div class="footer-link">
+      <a href="/">Retour au château</a>
+    </div>
+  </div>
+
+  <script src="/compte.js"></script>
+</body>
+</html>

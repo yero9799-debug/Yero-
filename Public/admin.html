@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Administration — YERO-Ban-checker</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div id="bg-layer"></div>
+
+  <div class="wrap">
+    <div class="panel">
+      <div class="panel-top">
+        <a href="/" class="icon-btn" title="Retour" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">←</a>
+      </div>
+      <h1 class="feed-title">🛠 Administration</h1>
+
+      <div id="admin-gate">
+        <p class="hint">Vérification de l'accès admin…</p>
+      </div>
+
+      <div id="admin-content" style="display:none;">
+        <p class="hint" id="visitor-count-hint"></p>
+
+        <h2 style="font-family:'Cinzel',serif;font-size:15px;color:var(--gold);margin:20px 0 10px;">Publier une annonce</h2>
+        <form id="announcement-form">
+          <div class="field">
+            <label for="announcement-text">Texte</label>
+            <textarea id="announcement-text" rows="3" required style="width:100%;background:rgba(0,0,0,0.35);border:1px solid var(--border);border-radius:14px;color:var(--ivory);padding:12px;font-family:inherit;"></textarea>
+          </div>
+          <div class="field">
+            <label for="announcement-media-type">Type de média (facultatif)</label>
+            <select id="announcement-media-type" style="width:100%;background:rgba(0,0,0,0.35);border:1px solid var(--border);border-radius:14px;color:var(--ivory);padding:12px;">
+              <option value="">Texte seul</option>
+              <option value="image">Image</option>
+              <option value="video">Vidéo</option>
+            </select>
+          </div>
+          <div class="field" id="announcement-media-url-field" style="display:none;">
+            <label for="announcement-media-url">Lien du média (URL)</label>
+            <input type="text" id="announcement-media-url" placeholder="https://…" />
+          </div>
+          <button type="submit">Publier</button>
+        </form>
+
+        <h2 style="font-family:'Cinzel',serif;font-size:15px;color:var(--gold);margin:26px 0 10px;">Comptes</h2>
+        <div id="users-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/admin.js"></script>
+</body>
+</html>

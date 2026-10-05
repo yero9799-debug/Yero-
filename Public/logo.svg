@@ -1,0 +1,10 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="YERO-Ban-checker">
+  <circle cx="60" cy="60" r="56" fill="none" stroke="#C9A24B" stroke-width="2"/>
+  <circle cx="60" cy="60" r="49" fill="none" stroke="#8A1220" stroke-width="1"/>
+  <path d="M60 34c-3 6-9 9-16 9 4 4 6 9 6 15 0 3-1 6-3 9 5-2 9-6 11-11 0-1 1-1 2 0 2 5 6 9 11 11-2-3-3-6-3-9 0-6 2-11 6-15-7 0-13-3-16-9z"
+        fill="#C9A24B"/>
+  <path d="M60 58c-8 0-15 5-19 12 3 6 10 10 19 10s16-4 19-10c-4-7-11-12-19-12z"
+        fill="#8A1220" opacity="0.9"/>
+  <circle cx="53" cy="70" r="2" fill="#E8DDD3"/>
+  <circle cx="67" cy="70" r="2" fill="#E8DDD3"/>
+</svg>

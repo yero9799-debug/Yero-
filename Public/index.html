@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YERO-Ban-checker</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div id="bg-layer"></div>
+  <video id="bg-video" autoplay muted loop playsinline style="display:none;"></video>
+  <audio id="bg-audio" loop></audio>
+
+  <div class="site-title">🇭🇹Mr YERO Dev🇭🇹</div>
+  <div class="visitor-badge" id="visitor-badge">👁 <span id="visitor-count">…</span> visiteurs</div>
+  <div class="toast" id="toast"></div>
+  <button type="button" class="audio-toggle" id="audio-toggle" title="Musique">🔇</button>
+
+  <div class="wrap">
+    <div class="panel">
+      <div class="panel-top menu-wrap">
+        <button class="icon-btn" id="history-btn" title="Historique" type="button">⟲</button>
+        <button class="icon-btn" id="menu-btn" title="Menu" type="button">⋮</button>
+
+        <div class="dropdown" id="dropdown">
+          <button type="button" data-modal="settings-modal">Settings</button>
+          <button type="button" data-modal="credits-modal">Credits</button>
+          <button type="button" data-modal="changelog-modal">Changelog</button>
+          <button type="button" id="check-updates-btn">Check updates</button>
+          <button type="button" id="pick-bg-btn">Pick background image</button>
+          <hr />
+          <button type="button" id="goto-announcements-btn">📣 Annonces</button>
+          <button type="button" id="goto-admin-btn" style="display:none;">🛠 Administration</button>
+          <hr />
+          <button type="button" id="share-btn">Share YERO-Ban-checker</button>
+          <button type="button" id="telegram-btn">Telegram Channel</button>
+          <button type="button" id="api-btn">BanCheck API</button>
+        </div>
+      </div>
+
+      <div class="deco-row">⊥ · ✳ · ⊥</div>
+      <div class="subtitle-jp">◇ 番号チェッカー ◇</div>
+
+      <form id="check-form">
+        <button type="button" class="autofill-chip" id="autofill-btn">⌘ Autofill</button>
+
+        <div class="phone-row">
+          <div class="dial-box" id="dial-box">
+            <span id="dial-flag">🏳️</span>
+            <span class="dial-plus">+</span>
+            <input class="dial-input" id="dial-input" type="text" inputmode="none" readonly placeholder="49" maxlength="4" />
+          </div>
+          <input id="number-input" type="text" inputmode="none" readonly placeholder="1234567890" required />
+        </div>
+        <div class="hint" id="validation-hint"></div>
+
+        <button type="submit">確認 · CHECK ·</button>
+      </form>
+      <div id="result"></div>
+
+      <div class="panel-footer">⊥ · © YERO-Ban-checker · ⊥</div>
+    </div>
+
+    <div class="footer-link">
+      <a href="/galerie.html">Mon espace personnel</a>
+    </div>
+  </div>
+
+  <!-- Clavier numérique personnalisé -->
+  <div class="keypad-backdrop" id="keypad-backdrop">
+    <div class="keypad" id="keypad">
+      <div class="keypad-target" id="keypad-target"></div>
+      <div class="keypad-grid">
+        <button type="button" class="keypad-key" data-key="1">1</button>
+        <button type="button" class="keypad-key" data-key="2">2</button>
+        <button type="button" class="keypad-key" data-key="3">3</button>
+        <button type="button" class="keypad-key" data-key="4">4</button>
+        <button type="button" class="keypad-key" data-key="5">5</button>
+        <button type="button" class="keypad-key" data-key="6">6</button>
+        <button type="button" class="keypad-key" data-key="7">7</button>
+        <button type="button" class="keypad-key" data-key="8">8</button>
+        <button type="button" class="keypad-key" data-key="9">9</button>
+        <button type="button" class="keypad-key keypad-key-wide" data-key="clear">Effacer</button>
+        <button type="button" class="keypad-key" data-key="0">0</button>
+        <button type="button" class="keypad-key keypad-key-back" data-key="back">⌫</button>
+      </div>
+      <button type="button" class="keypad-done" id="keypad-done">確認 · OK</button>
+    </div>
+  </div>
+
+  <!-- Popup résultat de check -->
+  <div class="result-backdrop" id="result-backdrop">
+    <div class="result-card" id="result-card">
+      <p class="result-label">This Number:</p>
+      <p class="result-number" id="result-number"></p>
+      <p class="result-title" id="result-title"></p>
+
+      <div class="result-details" id="result-details"></div>
+
+      <p class="result-note" id="result-note" style="display:none;"></p>
+
+      <div class="result-actions">
+        <button type="button" id="result-copy-btn">Copy</button>
+        <button type="button" id="result-close-btn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Settings -->
+  <div class="modal-backdrop" id="settings-modal">
+    <div class="modal">
+      <h2>Settings</h2>
+      <div class="field">
+        <label for="lang-select">Langue de l'interface</label>
+        <select id="lang-select" style="width:100%;background:rgba(0,0,0,0.35);border:1px solid var(--border);border-radius:14px;color:var(--ivory);padding:12px;">
+          <option value="fr">Français</option>
+          <option value="en">English</option>
+          <option value="jp">日本語</option>
+        </select>
+      </div>
+      <div class="field">
+        <label><input type="checkbox" id="vibrate-toggle" checked /> Vibration au résultat</label>
+      </div>
+      <div class="field">
+        <label for="popup-position-select">Position du résultat à l'écran</label>
+        <select id="popup-position-select" style="width:100%;background:rgba(0,0,0,0.35);border:1px solid var(--border);border-radius:14px;color:var(--ivory);padding:12px;">
+          <option value="top">En haut</option>
+          <option value="center" selected>Au milieu</option>
+          <option value="bottom">En bas</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="banned-text-input">Titre affiché quand banni</label>
+        <input type="text" id="banned-text-input" placeholder="This number is banned" />
+      </div>
+      <div class="field">
+        <label for="clean-text-input">Titre affiché quand actif</label>
+        <input type="text" id="clean-text-input" placeholder="This number is active" />
+      </div>
+
+      <hr />
+      <p class="settings-section-label">Fond du site (visible par tous — réservé à l'administrateur)</p>
+
+      <div class="field">
+        <label for="bg-video-input">Lien vidéo de fond (URL .mp4/.webm)</label>
+        <input type="text" id="bg-video-input" placeholder="https://…/fond.mp4" />
+      </div>
+      <div class="field">
+        <label for="bg-audio-input">Lien musique de fond (URL .mp3)</label>
+        <input type="text" id="bg-audio-input" placeholder="https://…/musique.mp3" />
+      </div>
+
+      <hr />
+      <p class="settings-section-label">Textes du site</p>
+      <div class="field">
+        <label for="site-title-input">Titre en haut du site</label>
+        <input type="text" id="site-title-input" placeholder="🇭🇹Mr YERO Dev🇭🇹" />
+      </div>
+      <div class="field">
+        <label for="checkbtn-text-input">Texte du bouton de vérification</label>
+        <input type="text" id="checkbtn-text-input" placeholder="確認 · CHECK ·" />
+      </div>
+      <div class="field">
+        <label for="subtitle-text-input">Sous-titre japonais</label>
+        <input type="text" id="subtitle-text-input" placeholder="◇ 番号チェッカー ◇" />
+      </div>
+      <div class="field">
+        <label for="footer-text-input">Texte du bas de page</label>
+        <input type="text" id="footer-text-input" placeholder="⊥ · © YERO-Ban-checker · ⊥" />
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" id="settings-apply-btn">Appliquer</button>
+        <button class="close-modal" type="button">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Compte requis (déclenché par "Appliquer") -->
+  <div class="modal-backdrop" id="account-required-modal">
+    <div class="modal">
+      <h2>Compte requis</h2>
+      <p style="font-size:13px;color:var(--ivory-dim);margin-bottom:14px;">
+        Pour appliquer un changement sur le site, crée un compte ou connecte-toi.
+      </p>
+      <div id="account-tabs" style="display:flex;gap:8px;margin-bottom:14px;">
+        <button type="button" class="account-tab active" data-tab="login">Se connecter</button>
+        <button type="button" class="account-tab" data-tab="register">Créer un compte</button>
+      </div>
+      <form id="account-form">
+        <div class="field" id="account-name-field" style="display:none;">
+          <label for="account-name">Nom</label>
+          <input type="text" id="account-name" placeholder="Ton nom" />
+        </div>
+        <div class="field" id="account-email-field" style="display:none;">
+          <label for="account-email">Gmail / email</label>
+          <input type="email" id="account-email" placeholder="toi@gmail.com" />
+        </div>
+        <div class="field" id="account-login-field">
+          <label for="account-login-id">Nom d'utilisateur ou email</label>
+          <input type="text" id="account-login-id" placeholder="Nom d'utilisateur ou email" />
+        </div>
+        <div class="field">
+          <label for="account-password">Mot de passe (phrase de 3 mots minimum)</label>
+          <input type="password" id="account-password" placeholder="ex : yero mange des tomates" />
+        </div>
+        <p class="hint" id="account-error" style="color:#c9807e;"></p>
+        <button type="submit" id="account-submit-btn">Se connecter</button>
+      </form>
+      <p style="font-size:11px;color:var(--ivory-dim);margin-top:14px;">
+        Compte perdu ? Contacte <strong>yero9799@gmail.com</strong> ou Telegram <strong>@yerogn</strong>.
+      </p>
+      <button class="close-modal" type="button">Fermer</button>
+    </div>
+  </div>
+
+  <!-- Modal Credits -->
+  <div class="modal-backdrop" id="credits-modal">
+    <div class="modal">
+      <h2>Credits</h2>
+      <p>YERO-Ban-checker utilise l'API BanCheck pour la vérification des numéros.</p>
+      <ul>
+        <li>Design & développement — vous</li>
+        <li>Vérification spam — BanCheck API</li>
+        <li>Icônes & polices — Google Fonts</li>
+      </ul>
+      <button class="close-modal" type="button">Fermer</button>
+    </div>
+  </div>
+
+  <!-- Modal Changelog -->
+  <div class="modal-backdrop" id="changelog-modal">
+    <div class="modal">
+      <h2>Changelog</h2>
+      <p><strong>v1.0</strong> — Lancement : vérification de numéro, espace personnel, galerie privée.</p>
+      <button class="close-modal" type="button">Fermer</button>
+    </div>
+  </div>
+
+  <!-- Modal Pick background -->
+  <div class="modal-backdrop" id="bg-modal">
+    <div class="modal">
+      <h2>Image de fond</h2>
+      <div class="bg-preview" id="bg-preview-box"></div>
+      <input type="file" id="bg-file-input" accept="image/*" style="width:100%;color:var(--ivory-dim);font-size:13px;" />
+      <p style="font-size:12px;">L'image est stockée sur cet appareil.</p>
+      <button class="close-modal" type="button">Appliquer & fermer</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/libphonenumber-js@1.11.1/bundle/libphonenumber-js.min.js"></script>
+  <script src="/countries.js"></script>
+  <script src="/site.js"></script>
+</body>
+</html>
